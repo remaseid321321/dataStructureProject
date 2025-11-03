@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package datastructure;
 
 import java.io.File;
@@ -16,7 +13,6 @@ import javafx.util.converter.LocalDateTimeStringConverter;
 public class Orders {
 	
     private LinkedList<Order> all_orders;
-    //كل كوستمر عنده مجموعه من الاوردرز , ف هنا اوبجكت من نوع كوستمر يحتوي على كل الكوستمر الي بدورهم يملك كل واحد منهم عدة اوردرز
     private Customers all_Customers;  
     static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
@@ -58,7 +54,7 @@ return all_orders;
         if (searchOrderById(ord.getCustomerID()) == null) { 
             all_orders.addLast(ord);
             assign(ord);           
-           // System.out.println("Order added successfully: " + ord.getOrderId());
+        
         } else {
             System.out.println("Order with ID " + ord.getCustomerID() + " already exists!");
         }
@@ -83,7 +79,7 @@ return all_orders;
         Scanner read = new Scanner(f);        
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         System.out.println("📂 Reading file: " + fileName);
-        System.out.println("-----------------------------------");
+        System.out.println("==============================================");
         read.nextLine();
         while (read.hasNextLine()) {
             String line = read.nextLine().trim();                               
@@ -107,9 +103,8 @@ return all_orders;
         }
 
         System.out.println("OrderID\tCustomerID\tProductIDs\t\tTotalPrice\tDate\t\tStatus");
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("========================================================================");
 
-       // SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         all_orders.findFirst();
         while (true) {
             Order o = all_orders.retrieve();
@@ -119,7 +114,7 @@ return all_orders;
             all_orders.findNext();
         }
 
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("=========================================================================");
     }
  
 
