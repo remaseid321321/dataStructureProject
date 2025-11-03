@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package datastructure;
 
 
@@ -32,13 +29,13 @@ public class Reviews {
     return all_products;
     }
  public Review Search_Review_by_id(int id){
-     if (reviews.empty()){
+     if (reviews.isEmpty()){
          return null;
      }
      else{
          reviews.findFirst();
            while(true){
-              if (reviews.retrieve().getReviewId()==id)
+              if (reviews.retrieve().getReviewID()==id)
               {
                   return reviews.retrieve();
               }
@@ -51,7 +48,7 @@ public class Reviews {
      return null;
  }
     public  void assign_to_product(Review r){
-       Product p= all_products.Search_Product_by_id(r.getProductId());
+       Product p= all_products.findProduct(r.getProductID());
 //       if(p==null)
 //             ;// System.out.println("not exist to assign review "+r.getReviewId()+"to it");
 //       else
@@ -59,7 +56,7 @@ public class Reviews {
            p.addReview(r);
      } 
       public  void assign_to_customer(Review r){
-       Customer p= all_Customers.searchById(r.getCustomerId());
+       Customer p= all_Customers.findCustomer(r.getCustomerID());
 //       if(p==null)
 //             ;// System.out.println("not exist to assign review "+r.getCustomerId()+"to it");
 //       else
@@ -68,13 +65,13 @@ public class Reviews {
      } 
     // 🟢 Add new Review
     public void addReview(Review r) {
-        if (Search_Review_by_id(r.getReviewId())==null) { //not Exist
+        if (Search_Review_by_id(r.getReviewID())==null) { //not Exist
             reviews.addLast(r);
             assign_to_product(r);
             assign_to_customer(r);
            // System.out.println("Review added: " + r.getReviewId());
         } else {
-            System.out.println("Review with ID " + r.getReviewId() + " already exists!");
+            System.out.println("Review with ID " + r.getReviewID() + " already exists!");
         }
     }    
  public void updateReview(int id, Review p) {
@@ -82,14 +79,14 @@ public class Reviews {
        if(old==null)
             System.out.println("not exist to make update");
        else
-           old.UpdateReview(p);
+           old.updateReview(p);
     }
   
 
     // 🧾 Display all reviews
     public void displayAllReviews() {
         System.out.println("=== All Reviews ===");
-       if (reviews.empty()){
+       if (reviews.isEmpty()){
            System.out.println("no reviews exist");
          return ;
      }
@@ -98,8 +95,8 @@ public class Reviews {
            while(true){
                Review p=reviews.retrieve();
                    p.display();                  
-                    System.out.println("***************************");
-                     System.out.println("***************************");
+                    System.out.println("=============================");
+                     System.out.println("============================");
                if (reviews.last())
                    break;
                else
@@ -132,9 +129,9 @@ public class Reviews {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Reviews all=new Reviews();
-    System.out.println("*********Test1***********");
+    System.out.println("============Test1===============");
      //all.test1();
-     System.out.println("*********Test3***********");
+     System.out.println("===========Test3=================");
     all.test3();
     }
     
@@ -157,7 +154,7 @@ public class Reviews {
             Scanner read = new Scanner(f);
 
             System.out.println("📂 Reading file: " + fileName);
-            System.out.println("-----------------------------------");
+            System.out.println("========================================");
            read.nextLine().trim();
             while (read.hasNextLine()) {
                 String line = read.nextLine().trim();
@@ -168,7 +165,7 @@ public class Reviews {
                 }
             }
             read.close();
-            System.out.println("-----------------------------------");
+            System.out.println("=================================================");
             System.out.println("✅ File loaded successfully!\n");
         } catch (Exception e) {
             System.out.println("❌ Error reading file: " + e.getMessage());
@@ -177,63 +174,12 @@ public class Reviews {
      public static void test3()
     {
   Reviews p=new Reviews(); 
-  p.all_products.load_products("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\prodcuts.csv");
+  p.all_products.loadProducts("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\prodcuts.csv");
   p.all_Customers.loadCustomers("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Customers.csv");
   p.load_revews("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\reviews.csv");
-  //p.displayAllReviews();
- 
-  //p.all_products.displayAllProducts();
+  
   p.all_Customers.displayAll();
     } 
-     //public void showCommonHighRatedProducts(int customerId1, int customerId2) {
-//    System.out.println("=== Common Products Reviewed by Both Customers (Avg > 4) ===");
-//
-//    LinkedList<Product> productsList = all_products.get_all_Products();
-//    if (productsList == null || productsList.empty()) {
-//        System.out.println("⚠️ No products available.");
-//        return;
-//    }
-//
-//    boolean found = false;
-//
-//    productsList.findFirst();
-//    while (true) {
-//        Product p = productsList.retrieve();
-//
-//        boolean reviewedByFirst = false;
-//        boolean reviewedBySecond = false;
-//
-//        LinkedList<Review> productReviews = p.getReviews();
-//        if (productReviews != null && !productReviews.empty()) {
-//            productReviews.findFirst();
-//            while (true) {
-//                Review r = productReviews.retrieve();
-//                if (r.getCustomerId() == customerId1)
-//                    reviewedByFirst = true;
-//                if (r.getCustomerId() == customerId2)
-//                    reviewedBySecond = true;
-//
-//                if (productReviews.last())
-//                    break;
-//                else
-//                    productReviews.findNext();
-//            }
-//        }
-//
-//       
-//        if (reviewedByFirst && reviewedBySecond && p.getAverageRating() > 4) {
-//            System.out.println("✅ " + p.getName() + " | Avg Rating: " + p.getAverageRating());
-//            found = true;
-//        }
-//
-//        if (productsList.last())
-//            break;
-//        else
-//            productsList.findNext();
-//    }
-//
-//    if (!found)
-//        System.out.println("⚠️ No common high-rated products found.");
-//}
+   
 
 }
