@@ -24,7 +24,7 @@ public class Order {
     }
     public void addIDs(String IDs){
         String [] part=IDs.split(";");
-        for(int i=1;i<=a.length;i++){
+        for(int i=0;i<a.length;i++){
             int id= Integer.parseInt(part[i].trim())
           productIds.insert(id);
         }
@@ -91,5 +91,6 @@ public class Order {
         ord2.display();
     }
 }
+
 
 
