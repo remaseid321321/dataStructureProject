@@ -45,7 +45,7 @@ return customers;
   
     public void addCustomer(Customer c) {
         if (findCustomer(c.getCustomerID())==null) { 
-            customers.addLast(c);
+            customers.insert(c);
             
             System.out.println("added successfully" + c.getName());
         } 
@@ -66,13 +66,16 @@ return customers;
                Customer c =customers.retrieve();
                    c.display(); 
                     System.out.println("***************************");
+                    System.out.println("***************************");
+
                    customers.findNext();
        }
     Customer c=customers.retrieve();
                    c.display(); 
                     System.out.println("***************************");
-                    
+                    System.out.println("***************************");
     }
+    
 public static Customer fromCSV_C(String Line)
     {
     String part[]=Line.split(",");
@@ -130,3 +133,4 @@ public static void test1() {
         test2();
     }
 }
+
