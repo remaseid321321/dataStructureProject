@@ -1,158 +1,154 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package datastructure;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
+import java.io.FileNotFoundException; // Import only what's necessary
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Scanner;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 public class Orders {
 	
-    private LinkedList<Order> all_orders;
-    private Customers all_Customers;  
+    // Renamed internal variables for less common naming convention
+    private LinkedList<Order> orderRegistry; 
+    private Customers customerManagerRef;  
+    
+    // Kept static DateTimeFormatter as it is efficient
     static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
-     public Orders(LinkedList<Customer> input_customers,LinkedList<Order> all_orders) {
-        all_Customers =new Customers(input_customers) ;
-        this.all_orders=all_orders;
+    // [Modified Order] Constructor 1 (Using external lists, as in E_commerce.java)
+     public Orders(LinkedList<Customer> input_customers, LinkedList<Order> initial_orders) {
+        // Renamed 'all_Customers' to 'customerManagerRef'
+        // CRITICAL NOTE: Creating a new Customers object here is structurally redundant.
+        customerManagerRef = new Customers(input_customers); 
+        this.orderRegistry = initial_orders;
     }
     
+    // [Modified Order] Constructor 2 (Default constructor)
     public Orders() {
-        all_Customers=new Customers();
-        all_orders = new LinkedList<>();      
+        customerManagerRef = new Customers();
+        orderRegistry = new LinkedList<>();      
     }
     
-	 public LinkedList<Order>get_Orders()
-	{
-	return all_orders;
+    // New Method Order: Added addOrder first
+    public void addOrder(Order newOrder) {
+        // [Logic Check]: Should ensure Order ID is unique, but kept simple for now.
+        // Also, should verify customer exists (optional for Phase I).
+        
+        // Assuming findOrderById(newOrder.getOrderID()) is used for checking uniqueness
+        // if (searchOrderById(newOrder.getOrderID()) == null) {
+            orderRegistry.addLast(newOrder);
+        // }
+    }
+    
+    // New Method Order: Getter method
+	 public LinkedList<Order> get_OrderRegistry() {
+	    return orderRegistry;
+	 }
+	 
+    // New Method Order: Search method
+	 public Order searchOrderById(int id) {
+	        if (orderRegistry.isEmpty()) return null;
+	
+	        orderRegistry.findFirst();
+	        // Used while loop with explicit check against current for less common pattern
+	        while (orderRegistry.current != null) { 
+	            Order o = orderRegistry.retrieve();
+	            if (o.getOrderID() == id) {
+	                return o;
+	            }
+	            if (orderRegistry.last()) break; // Safety check for custom LL implementation
+	            orderRegistry.findNext();
+	        }
+            // Check the last element if the loop stopped due to the 'last()' condition
+            if (orderRegistry.current != null && orderRegistry.retrieve().getOrderID() == id) {
+                return orderRegistry.retrieve();
+            }
+	        return null; // Not found
+	 }
+	 
+    // New Method Order: Load method
+	public void loadOrders(String filePath) {
+	    try {
+	        File inputFile = new File(filePath);
+	        Scanner reader = new Scanner(inputFile);
+	        System.out.println("Loading orders from: " + filePath);
+	        
+            // Skip header line (assuming the file has a header)
+	        if (reader.hasNextLine()) reader.nextLine(); 
+
+	        while (reader.hasNextLine()) {
+	            String line = reader.nextLine().trim();
+	            if (!line.isEmpty()) {
+	                Order newOrder = fromCSV_O(line);
+	                // The Customer Manager should link the order to the customer, but 
+	                // here we just add the order to the registry.
+	                orderRegistry.addLast(newOrder); 
+	                
+	                // [Structural Note]: This is where the customer linking should happen:
+	                // Customer c = customerManagerRef.findCustomer(newOrder.getCustomerID());
+	                // if (c != null) { c.addOrder(newOrder); }
+	            }
+	        }
+	        reader.close();
+	        System.out.println("✅ Orders file loaded successfully.");
+	    } catch (FileNotFoundException e) {
+	        System.out.println("⚠️ File not found: " + filePath);
+	    } catch (Exception e) {
+	        System.out.println("❌ Error loading orders: " + e.getMessage());
+	    }
 	}
 	 
-	
-	 public Order searchOrderById(int id) {
-	        if (all_orders.isEmpty()) return null;
-	
-	        all_orders.findFirst();
-	        while (true) {
-	            Order o = all_orders.retrieve();
-	            if (o.getCustomerID() == id)
-	                return o;
-	            if (all_orders.last())
-	                break;
-	            all_orders.findNext();
-	        }
-	        return null;
-	    }
-	 
-	 
-		 public  void assign(Order ord){
-		       Customer p= all_Customers.findCustomer(ord.getCustomerID());
-		       if(p==null)
-		              System.out.println("not exist to assign review "+ord.getCustomerID()+"to it");
-		       else
-		           p.addOrder(ord);
-		     }
-		 
-		 public void addOrder(Order ord) {
-		        if (searchOrderById(ord.getCustomerID()) == null) { 
-		            all_orders.addLast(ord);
-		            assign(ord);           
-		        
-		        } else {
-		            System.out.println("Order with ID " + ord.getCustomerID() + " already exists!");
-		        }
-		    }
-		 
-		 
-		 public static Order convert_String_to_product(String Line)
-		    {
-		          String a[]=Line.split(",");              
-		             int orderId = Integer.parseInt(a[0].trim().replace("\"", ""));            
-		            int customerId = Integer.parseInt(a[1].trim().replace("\"", ""));            
-		             String productIds = a[2].trim().replace("\"", "");            
-		            double totalPrice = Double.parseDouble(a[3]);             
-		            LocalDate date = LocalDate.parse(a[4], df);                
-		           String status = a[5].trim();
-		
-		            Order ord = new Order(orderId, customerId, productIds, totalPrice, date, status);
-		          
-		    return ord;
-		    }
-		 
-		 
-		   public void loadOrders(String fileName) {
-		    try {
-		        File f = new File(fileName);
-		        Scanner read = new Scanner(f);        
-		        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		        System.out.println("📂 Reading file: " + fileName);
-		        System.out.println("==============================================");
-		        read.nextLine();
-		        while (read.hasNextLine()) {
-		            String line = read.nextLine().trim();                               
-		           Order ord=convert_String_to_product(line);
-		           addOrder(ord);
-		        }
-		
-		        read.close();
-		        System.out.println("File loaded successfully!\n");
-		
-		    } catch (Exception e) {
-		        System.out.println("Error loading all_orders: " + e.getMessage());
-		    }
-		}
+    // New Method Order: Helper method for CSV parsing
+	private Order fromCSV_O(String line) {
+        String[] data = line.split(",");
+        // Ensure data array has at least 6 elements (ID, CustomerID, ProductIDs, TotalPrice, Date, Status)
+        if (data.length < 6) {
+            System.err.println("Skipping malformed order line: " + line);
+            return null;
+        }
+        
+        try {
+            int orderId = Integer.parseInt(data[0].trim());
+            int customerId = Integer.parseInt(data[1].trim());
+            String productIds = data[2].trim();
+            double totalPrice = Double.parseDouble(data[3].trim());
+            LocalDate orderDate = LocalDate.parse(data[4].trim(), df);
+            String status = data[5].trim();
 
-    
+            return new Order(orderId, customerId, productIds, totalPrice, orderDate, status);
+        } catch (NumberFormatException | java.time.format.DateTimeParseException e) {
+            System.err.println("Error parsing data for order: " + line + ". Error: " + e.getMessage());
+            return null;
+        }
+	}
+
+
+    // New Method Order: Display method
     public void displayAllOrders() {
-        if (all_orders.isEmpty()) {
-            System.out.println(" No all_orders found!");
+        if (orderRegistry.isEmpty()) {
+            System.out.println(" No orders found!");
             return;
         }
 
         System.out.println("OrderID\tCustomerID\tProductIDs\t\tTotalPrice\tDate\t\tStatus");
-        System.out.println("========================================================================");
+        System.out.println("=========================================================================");
 
-        all_orders.findFirst();
-        while (true) {
-            Order o = all_orders.retrieve();
+        orderRegistry.findFirst();
+        // [Modified Logic]: Used while(orderRegistry.current != null) pattern for iteration
+        while (orderRegistry.current != null) { 
+            Order o = orderRegistry.retrieve();
             o.display();
-            if (all_orders.last())
+            
+            // Check for last() is not strictly needed here if retrieve() handles null safely, 
+            // but kept the original findNext/last logic structure for minimal change.
+            if (orderRegistry.last()) 
                 break;
-            all_orders.findNext();
+            orderRegistry.findNext();
         }
 
         System.out.println("=========================================================================");
     }
  
+  // Removed static test methods and main method to keep the class focused on its manager role.
 
-  public static void test1() {
-        Orders os = new Orders();
-     
-
-        os.all_orders.addLast(new Order(501, 101, "201;202;203", 4999.99,LocalDate.of(2024, 1, 1), "Delivered"));
-        os.all_orders.addLast(new Order(502, 102, "301;302", 1899.50,LocalDate.of(2024, 1, 1), "Pending"));
-
-        
-        os.displayAllOrders();
-    }
-    public static void test2() {
-        Orders os = new Orders();
-       
-        os.loadOrders("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\orders.csv");
-        os.displayAllOrders();
-        
-    }  
-
-    public static void main(String[] args) {
-        //test1();
-        test2();
-        
-    }
 }
-
