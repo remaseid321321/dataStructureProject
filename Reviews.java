@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package datastructure;
 
 
@@ -9,6 +5,8 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Reviews {
+	
+	
     private static LinkedList<Review> reviews;    
     private Products all_products;
     private Customers all_Customers;
@@ -18,19 +16,26 @@ public class Reviews {
         all_products=new Products(input_products);
         all_Customers =new Customers(input_customers) ;
     }
+     
+     
     public Reviews() {
         reviews = new LinkedList<>();
         all_products=new Products();
         all_Customers=new Customers();
     }
+    
     public LinkedList<Review>get_all_Reviews()
     {
     return reviews;
     }
+    
+    
     public Products get_all_Products()
     {
     return all_products;
     }
+    
+    
  public Review Search_Review_by_id(int id){
      if (reviews.isEmpty()){
          return null;
@@ -50,33 +55,35 @@ public class Reviews {
        }
      return null;
  }
+ 
+ 
     public  void assign_to_product(Review r){
        Product p= all_products.findProduct(r.getProductID());
-//       if(p==null)
-//             ;// System.out.println("not exist to assign review "+r.getReviewId()+"to it");
-//       else
+
         if(p!=null)
            p.addReview(r);
      } 
+    
+    
       public  void assign_to_customer(Review r){
        Customer p= all_Customers.findCustomer(r.getCustomerID());
-//       if(p==null)
-//             ;// System.out.println("not exist to assign review "+r.getCustomerId()+"to it");
-//       else
+
        if(p!=null)
            p.addReview(r);
      } 
-    // 🟢 Add new Review
+      
+      
     public void addReview(Review r) {
-        if (Search_Review_by_id(r.getReviewID())==null) { //not Exist
+        if (Search_Review_by_id(r.getReviewID())==null) { 
             reviews.addLast(r);
             assign_to_product(r);
             assign_to_customer(r);
-           // System.out.println("Review added: " + r.getReviewId());
         } else {
             System.out.println("Review with ID " + r.getReviewID() + " already exists!");
         }
     }    
+    
+    
  public void updateReview(int id, Review p) {
        Review old=Search_Review_by_id(id);
        if(old==null)
@@ -86,7 +93,6 @@ public class Reviews {
     }
   
 
-    // 🧾 Display all reviews
     public void displayAllReviews() {
         System.out.println("=== All Reviews ===");
        if (reviews.isEmpty()){
@@ -156,7 +162,7 @@ public class Reviews {
             File f = new File(fileName);
             Scanner read = new Scanner(f);
 
-            System.out.println("📂 Reading file: " + fileName);
+            System.out.println(" Reading file: " + fileName);
             System.out.println("========================================");
            read.nextLine().trim();
             while (read.hasNextLine()) {
@@ -169,9 +175,9 @@ public class Reviews {
             }
             read.close();
             System.out.println("=================================================");
-            System.out.println("✅ File loaded successfully!\n");
+            System.out.println("File loaded successfully!\n");
         } catch (Exception e) {
-            System.out.println("❌ Error reading file: " + e.getMessage());
+            System.out.println("Error reading file: " + e.getMessage());
         }
     }
      public static void test3()
