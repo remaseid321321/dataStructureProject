@@ -44,10 +44,12 @@ public void displayReviews() {
             System.out.println( name + " Reviews is :");
             reviews.findFirst();
             while (!reviews.last()) {
-                reviews.retrieve().display();
+                Reviews r =reviews.retrieve()
+                r.display();
                 reviews.findNext();
             }
-                            reviews.retrieve().display();
+                 Reviews r =reviews.retrieve()
+                 r.display();      
         }
 
     }
@@ -60,11 +62,12 @@ public void displayReviews() {
         System.out.println( name + "Orders is:");
         orders.findFirst();
         while (!orders.last()) {
-            orders.retrieve().display();
+            Order o=orders.retrieve()
+            o.display();
             orders.findNext();
         }
-                    orders.retrieve().display();
-
+               Order o=orders.retrieve()
+               o.display();
     }
     }
 
@@ -92,6 +95,7 @@ public void displayReviews() {
        test2();
     }
 }
+
 
 
 
