@@ -27,16 +27,14 @@ return customers;
      else{
          customers.findFirst();
            while(!customers.last()){
+               Customer c=customers.retrieve();
               if (customers.retrieve().getCustomerID()==id)
-              {
-                  return customers.retrieve();
-              }
+                  return c;
                    customers.findNext();
          }
-           if (customers.retrieve().getCustomerID()==id)
-              {
-                  return customers.retrieve();
-              }  
+                          Customer c=customers.retrieve();
+              if (customers.retrieve().getCustomerID()==id)
+                  return c;
        }
      return null;
 
@@ -133,4 +131,5 @@ public static void test1() {
         test2();
     }
 }
+
 
