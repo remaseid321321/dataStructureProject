@@ -27,14 +27,12 @@ public class Products {
      else{
          products.findFirst();
            while(!products.last()){
-              if (products.retrieve().getProductID()==id)
-              {
+              if (products.retrieve().getProductID()==id) {
                   return products.retrieve();
               }
                    products.findNext();
          }
-           if (products.retrieve().getProductID()==id)
-              {
+           if (products.retrieve().getProductID()==id) {
                   return products.retrieve();
               }  
        }
@@ -43,7 +41,7 @@ public class Products {
     
     public void addProduct(Product p) {
         if (findProduct(p.getProductID())==null) { 
-            products.addLast(p);
+            products.insert(p);
             
             System.out.println("added successfully" + p.getName());
         } 
@@ -68,11 +66,12 @@ public class Products {
        Product existing =findProduct(id);
        if(existing==null)
             System.out.println("product not found");
-       else
+       else{
            existing.updateProduct(p);
                    System.out.println("product update successfully");
-
+     }       
     }
+                                                
 
   
 
@@ -83,7 +82,6 @@ public class Products {
              System.out.println("no products found");  
              return;
          }
-        
              boolean found = false;
              products.findFirst();
            while(!products.last()){
@@ -98,7 +96,7 @@ public class Products {
                    found=true;
 }
 
-            if (!found) System.out.println("✅ All products in stock!");
+            if (!found) System.out.println(" All products in stock!");
        
      
     }
@@ -115,24 +113,28 @@ public class Products {
                    p.display(); 
                    p.displayReviews();
                     System.out.println("***************************");
+                    System.out.println("***************************");
+
                    products.findNext();
        }
     Product p=products.retrieve();
                    p.display(); 
                    p.displayReviews();
-                    System.out.println("***************************");
-                    
+                    System.out.println("***************************");  
+                   System.out.println("***************************");   
+
     }
-     
+
     public  void assign(Review r){
        Product p= findProduct(r.getProductID());
        if(p==null)
               System.out.println(" Review "+r.getReviewID()+"ignored , product not found");
-       else
+   else{
            p.addReview(r);
                     System.out.println(" Review add to product: "+r.getReviewID());
-
+   }
      }
+    
      public void test1() {
     Product p1 = new Product(101, "Laptop Pro 15", 1499.99, 20);
     Review r1 = new Review(201, 101, 300, 5, "Excellent laptop");
@@ -180,7 +182,7 @@ public class Products {
 } 
   
 public static Product fromCSV_P(String line) {
-    String part[]=line.split(",");
+    String[] part=line.split(",");
     Product p=new Product(Integer.parseInt(part[0]), part[1],Double.parseDouble(part[2]),Integer.parseInt(part[3]));
     return p;
     }
@@ -229,4 +231,5 @@ public static Product fromCSV_P(String line) {
     all.test3();
     }  
     
+
 }
