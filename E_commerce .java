@@ -13,7 +13,7 @@ public class E_commerce
     
     private static Reviews all_Reviews;
     private static Customers all_Customers;
-    private static Orders all_Orders;
+    private static Orders orderProcessingUnit;
     private static Products all_products;
     
     public E_commerce()
@@ -26,7 +26,7 @@ public class E_commerce
     
     all_products=new Products(products_list);
     all_Customers=new Customers(customers_list);
-    all_Orders=new Orders(customers_list,orders_list);
+    orderProcessingUnit=new Orders(customers_list,orders_list);
     all_Reviews=new Reviews(reviews_list,products_list,customers_list);   
   
     }
@@ -40,7 +40,7 @@ public class E_commerce
          
          System.out.println(" Loading Reviews and Orders...");
          all_Reviews.load_revews("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\reviews.csv");
-         all_Orders.loadOrders("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Orders.csv");  
+         orderProcessingUnit.loadOrders("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Orders.csv");  
          System.out.println(" All data loaded successfully.");
       }
     
@@ -48,7 +48,7 @@ public class E_commerce
     
      public static void add_Customer(Customer c) { all_Customers.addCustomer(c); }
      public static void add_Product(Product p) { all_products.addProduct(p); }
-     public static void add_Order(Order o) { all_Orders.addOrder(o); }
+     public static void add_Order(Order o) { orderProcessingUnit.addOrder(o); }
      public static void add_Review(Review r) { all_Reviews.addReview(r); }
        
      
@@ -220,7 +220,6 @@ public class E_commerce
                      Load_all();
                     break;                   
                 case 2:
-                  
                     System.out.print("Enter Product ID (int): ");
                     int p_id = input.nextInt(); input.nextLine(); 
                     System.out.print("Enter Name (String): ");
@@ -233,7 +232,6 @@ public class E_commerce
                     add_Product(p);                   
                     break;
                 case 3:                    
-                  
                     System.out.print("Enter Customer ID (int): ");
                     int c_id = input.nextInt(); input.nextLine(); 
                     System.out.print("Enter Name (String): ");
@@ -244,7 +242,6 @@ public class E_commerce
                    add_Customer(c);
                     break;
                 case 4:
-                  
                     System.out.print("Enter Order ID (int): ");
                     int o_id = input.nextInt(); input.nextLine();
                     System.out.print("Enter Customer ID (int): ");
@@ -261,7 +258,6 @@ public class E_commerce
                    add_Order(o);
                     break;
                 case 5:
-             
                     System.out.print("Enter Review ID (int): ");
                     int r_rid = input.nextInt(); input.nextLine();
                     System.out.print("Enter Product ID (int): ");
@@ -282,7 +278,7 @@ public class E_commerce
                  e1.displayTop3Products();
                     break;
                 case 8:
-                    all_Orders.displayAllOrders();
+                	orderProcessingUnit.displayAllOrders();
                     break;
                 case 9:
                     
