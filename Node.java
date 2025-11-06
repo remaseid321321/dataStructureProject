@@ -1,6 +1,6 @@
 package datastructure;
 
-class Node<T> {
+public class Node<T> {
 	public T data;
 	public Node<T> next;
         
@@ -8,4 +8,5 @@ class Node<T> {
 		data = d;
 		next = null;
 	}
+
 }
