@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 
 public class Product {
-    private int productID;
     private String name;
+    private int productID;
     private double price;
     private int stock;
     private LinkedList<Review> reviews;
     
-    public Product(int PID, String n, double p, int s) {
+    public Product(int PID, String n , double p, int s) {
         productID = PID;
         name = n;
         price = p;
@@ -21,12 +21,11 @@ public class Product {
     }
     
     
-
-    public int getProductID() {
-        return productID; }
-    
     public String getName() {
         return name; }
+    
+    public int getProductID() {
+        return productID; }
     
     public double getPrice() {
         return price; }
@@ -40,7 +39,7 @@ public class Product {
         stock = s; }
 
     public void addReview(Review r) {        
-        reviews.addLast(r);
+        reviews.insert(r);
     }
 
     public void updateProduct(Product p) {
@@ -53,17 +52,18 @@ public class Product {
     
     public double getAverageRate() {
         if (reviews.isEmpty()) 
-            return 0.0;
+            return 0;
         
         reviews.findFirst();
-        double sum = 0;
-        int count = 0;
+        double sum=0;
+        int count=0;
+        
         while (!reviews.last()) {
-            sum += reviews.retrieve().getRating();
+            sum= sum + reviews.retrieve().getRating();
             count++;
             reviews.findNext();
         }
-        sum += reviews.retrieve().getRating();
+        sum= sum + reviews.retrieve().getRating();
             count++;
         return sum / count;
     }
@@ -72,7 +72,8 @@ public class Product {
         System.out.println( name + "  Reviews is :");
         if (reviews.isEmpty()) {
             System.out.println(" there is No reviews ");
-        } else {
+        } 
+        else {
             reviews.findFirst();
             while (!reviews.last()) {
                 reviews.retrieve().display();
@@ -90,6 +91,8 @@ public class Product {
         System.out.println("Stock=" + stock);
         System.out.println("Average Rate=" + getAverageRate());
         System.out.println("********************************");
+        System.out.println("********************************");
+
     } 
     
     
@@ -113,3 +116,4 @@ public class Product {
     }
     
 }
+
