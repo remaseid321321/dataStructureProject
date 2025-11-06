@@ -7,50 +7,50 @@ import java.util.Scanner;
 public class Reviews {
 	
 	
-    private static LinkedList<Review> reviews;    
-    private Products all_products;
-    private Customers all_Customers;
+    private static LinkedList<Review> userFeedbackList;    
+    private Products productsCatalog;
+    private Customers clinetRoster;
      public Reviews(LinkedList<Review> reviews,LinkedList<Product> input_products
                                           ,LinkedList<Customer> input_customers) {
-        this.reviews = reviews;
-        all_products=new Products(input_products);
-        all_Customers =new Customers(input_customers) ;
+        this.userFeedbackList = reviews;
+        productsCatalog=new Products(input_products);
+        clinetRoster =new Customers(input_customers) ;
     }
      
      
     public Reviews() {
-        reviews = new LinkedList<>();
-        all_products=new Products();
-        all_Customers=new Customers();
+    	userFeedbackList = new LinkedList<>();
+    	productsCatalog=new Products();
+    	clinetRoster=new Customers();
     }
     
     public LinkedList<Review>get_all_Reviews()
     {
-    return reviews;
+    return userFeedbackList;
     }
     
     
     public Products get_all_Products()
     {
-    return all_products;
+    return productsCatalog;
     }
     
     
  public Review Search_Review_by_id(int id){
-     if (reviews.isEmpty()){
+     if (userFeedbackList.isEmpty()){
          return null;
      }
      else{
-         reviews.findFirst();
+    	 userFeedbackList.findFirst();
            while(true){
-              if (reviews.retrieve().getReviewID()==id)
+              if (userFeedbackList.retrieve().getReviewID()==id)
               {
-                  return reviews.retrieve();
+                  return userFeedbackList.retrieve();
               }
-               if (reviews.last())
+               if (userFeedbackList.last())
                    break;
                else
-                   reviews.findNext();
+            	   userFeedbackList.findNext();
          }
        }
      return null;
@@ -58,7 +58,7 @@ public class Reviews {
  
  
     public  void assign_to_product(Review r){
-       Product p= all_products.findProduct(r.getProductID());
+       Product p= productsCatalog.findProduct(r.getProductID());
 
         if(p!=null)
            p.addReview(r);
@@ -66,7 +66,7 @@ public class Reviews {
     
     
       public  void assign_to_customer(Review r){
-       Customer p= all_Customers.findCustomer(r.getCustomerID());
+       Customer p= clinetRoster.findCustomer(r.getCustomerID());
 
        if(p!=null)
            p.addReview(r);
@@ -75,7 +75,7 @@ public class Reviews {
       
     public void addReview(Review r) {
         if (Search_Review_by_id(r.getReviewID())==null) { 
-            reviews.addLast(r);
+        	userFeedbackList.addLast(r);
             assign_to_product(r);
             assign_to_customer(r);
         } else {
@@ -95,21 +95,21 @@ public class Reviews {
 
     public void displayAllReviews() {
         System.out.println("=== All Reviews ===");
-       if (reviews.isEmpty()){
+       if (userFeedbackList.isEmpty()){
            System.out.println("no reviews exist");
          return ;
      }
      else{
-         reviews.findFirst();
+    	 userFeedbackList.findFirst();
            while(true){
-               Review p=reviews.retrieve();
+               Review p=userFeedbackList.retrieve();
                    p.display();                  
                     System.out.println("=============================");
                      System.out.println("============================");
-               if (reviews.last())
+               if (userFeedbackList.last())
                    break;
                else
-                   reviews.findNext();
+            	   userFeedbackList.findNext();
          }
        }
     
@@ -183,11 +183,11 @@ public class Reviews {
      public static void test3()
     {
   Reviews p=new Reviews(); 
-  p.all_products.loadProducts("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\prodcuts.csv");
-  p.all_Customers.loadCustomers("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Customers.csv");
+  p.productsCatalog.loadProducts("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\prodcuts.csv");
+  p.clinetRoster.loadCustomers("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Customers.csv");
   p.load_revews("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\reviews.csv");
   
-  p.all_Customers.displayAll();
+  p.clinetRoster.displayAll();
     } 
    
 
