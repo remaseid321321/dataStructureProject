@@ -8,15 +8,15 @@ public class Customer {
     private int customerID;
     private String name;
     private String email;
-    private LinkedList<Order> orders;
     private LinkedList<Review> reviews;
-    
+    private LinkedList<Order> orders;
+        
     public Customer(int CID, String n, String e) {
         customerID=CID;
         name= n;
         email =e;
-        orders=new LinkedList<>();
         reviews=new LinkedList<>();
+        orders=new LinkedList<>();
     }
 
     public int getCustomerID() {
@@ -29,18 +29,19 @@ public class Customer {
         return email; }
 
     public void addOrder(Order o) { 
-        orders.addLast(o); 
+        orders.insert(o); 
     }
     
     public void addReview(Review r) { 
-       reviews.addLast(r); 
+       reviews.insert(r); 
     }
     
 public void displayReviews() {
-        System.out.println( name + "  Reviews is :");
         if (reviews.isEmpty()) {
-            System.out.println(" there is No reviews ");
-        } else {
+            System.out.println(" there is No reviews for" + name);
+        }
+        else {
+            System.out.println( name + " Reviews is :");
             reviews.findFirst();
             while (!reviews.last()) {
                 reviews.retrieve().display();
@@ -51,21 +52,12 @@ public void displayReviews() {
 
     }
 
-    public void display() {
-        System.out.println("Customer ID: " + customerID);
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("******************************");
-        displayOrders();
-        displayReviews();
-    }
-
     public void displayOrders() {
         if (orders.isEmpty()) {
             System.out.println("No order was found for" + name);
-            return;
         }
-        System.out.println("Orders for " + name + " is :");
+        else{
+        System.out.println( name + "Orders is:");
         orders.findFirst();
         while (!orders.last()) {
             orders.retrieve().display();
@@ -74,6 +66,20 @@ public void displayReviews() {
                     orders.retrieve().display();
 
     }
+    }
+
+    public void display() {
+        System.out.println("Customer ID: " + customerID);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("******************************");
+        System.out.println("******************************");
+
+        displayOrders();
+        displayReviews();
+    }
+
+    
     public static void test2() {
         
      Customer c1 = new Customer(201, "Omar Hassan", "omar.hassan@gmail.com");
@@ -86,6 +92,7 @@ public void displayReviews() {
        test2();
     }
 }
+
 
 
 
