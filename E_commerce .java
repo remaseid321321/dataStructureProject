@@ -11,7 +11,7 @@ public class E_commerce
     private static LinkedList<Product> products_list;
     private static LinkedList<Review> reviews_list; 
     
-    private static Reviews all_Reviews;
+    private static Reviews reviewProcessingUnit;
     private static Customers all_Customers;
     private static Orders orderProcessingUnit;
     private static Products all_products;
@@ -27,7 +27,7 @@ public class E_commerce
     all_products=new Products(products_list);
     all_Customers=new Customers(customers_list);
     orderProcessingUnit=new Orders(customers_list,orders_list);
-    all_Reviews=new Reviews(reviews_list,products_list,customers_list);   
+    reviewProcessingUnit=new Reviews(reviews_list,products_list,customers_list);   
   
     }
 
@@ -35,12 +35,12 @@ public class E_commerce
     {    
     	 System.out.println(" Loading Products and Customers...");
         
-         all_products.loadProducts("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\prodcuts.csv");
-         all_Customers.loadCustomers("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\customers.csv");
+         all_products.loadProducts("prodcuts.csv");
+         all_Customers.loadCustomers("customers.csv");
          
          System.out.println(" Loading Reviews and Orders...");
-         all_Reviews.load_revews("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\reviews.csv");
-         orderProcessingUnit.loadOrders("C:\\Users\\win\\Documents\\NetBeansProjects\\212project2025\\Orders.csv");  
+         reviewProcessingUnit.load_revews("reviews.csv");
+         orderProcessingUnit.loadOrders("Orders.csv");  
          System.out.println(" All data loaded successfully.");
       }
     
@@ -49,7 +49,7 @@ public class E_commerce
      public static void add_Customer(Customer c) { all_Customers.addCustomer(c); }
      public static void add_Product(Product p) { all_products.addProduct(p); }
      public static void add_Order(Order o) { orderProcessingUnit.addOrder(o); }
-     public static void add_Review(Review r) { all_Reviews.addReview(r); }
+     public static void add_Review(Review r) { reviewProcessingUnit.addReview(r); }
        
      
      
