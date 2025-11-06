@@ -14,11 +14,11 @@ public class Review {
    
 
     public Review(int RID,int PID,  int CID,int r,String c) {
-        reviewID = RID;
-        productID =  PID;
-        customerID = CID;
-        rating = r;
-        comment = c;
+        reviewID= RID;
+        productID=PID;
+        customerID =CID;
+        rating= r;
+        comment =c;
     }
     
 public void updateReview(Review p) {
@@ -57,6 +57,9 @@ public void updateReview(Review p) {
         System.out.println("Rating: " + rating + "/5");
         System.out.println("Comment: " + comment);
         System.out.println("****************************");
+        System.out.println("****************************");
+
     }
    
 }
+
