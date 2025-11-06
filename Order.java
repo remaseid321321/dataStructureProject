@@ -12,27 +12,26 @@ public class Order {
     private String status;
     private LinkedList<Integer>productIds;
 
-    public Order(int OID, int CID, String PIDs, double t,  LocalDate localDate, String s) {
+    public Order(int OID, int CID, String PIDs, double t,LocalDate d, String s) {
         orderID = OID;
         customerID = CID;
         productIDs=PIDs;       
         totalPrice = t;
-        orderDate = localDate;
+        orderDate =d;
         status = s;
-
-        this.productIds = new LinkedList<>();
+        productIds= new LinkedList<>();
          addIDs(productIDs);
     }
-    public void addIDs(String IDs)
-    {
-        String a[]=IDs.split(";");
-        for(int i=1;i<=a.length;i++)
-          productIds.addLast(Integer.parseInt(a[i].trim()));
-        
+    public void addIDs(String IDs){
+        String [] part=IDs.split(";");
+        for(int i=1;i<=a.length;i++){
+            int id= Integer.parseInt(part[i].trim())
+          productIds.insert(id);
+        }
     } 
-    public void addID(int id)
-    {
-    productIds.addLast(id);
+    
+    public void addID(int id) {
+    productIds.insert(id);
     }
     
     public void UpdateOrder (Order o) {
@@ -90,3 +89,4 @@ public class Order {
         ord2.display();
     }
 }
+
