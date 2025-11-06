@@ -69,11 +69,11 @@ public class Product {
     }
 
     public void displayReviews() {
-        System.out.println( name + "  Reviews is :");
         if (reviews.isEmpty()) {
             System.out.println(" there is No reviews ");
         } 
         else {
+            System.out.println( name + "  Reviews is :");
             reviews.findFirst();
             while (!reviews.last()) {
                 reviews.retrieve().display();
@@ -116,4 +116,5 @@ public class Product {
     }
     
 }
+
 
