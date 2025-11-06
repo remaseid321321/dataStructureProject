@@ -37,10 +37,10 @@ public class Order {
     public void UpdateOrder (Order o) {
         orderID =o.orderID;
         customerID = o.customerID;
-        productIDs = o.productIDs;
+        productIDs =o.productIDs;
         totalPrice =o.totalPrice;
         orderDate = o.orderDate;
-        status=  o.status;
+        status= o.status;
         productIds =o.productIds;
     }
 
@@ -80,6 +80,8 @@ public class Order {
         System.out.println("Date: "+ orderDate);
         System.out.println("Status: "+status);
         System.out.println("*****************************");
+        System.out.println("*****************************");
+
     }  
 
     public static void main(String[] args) {
@@ -89,4 +91,5 @@ public class Order {
         ord2.display();
     }
 }
+
 
